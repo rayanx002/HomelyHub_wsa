@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import {router} from "./routes/userRoutes.js";
 
 import connectDB from "./utils/db.js";
 
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
   res.send("HomelyHub Backend is running successfully!");
 }); 
 
+app.use("/api/v1/rent/user", router);
 
 connectDB();
 
