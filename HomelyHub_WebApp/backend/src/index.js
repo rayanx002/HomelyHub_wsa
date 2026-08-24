@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import {router} from "./routes/userRoutes.js";
+import { propertyRouter } from "./routes/propertyRouter.js";
 
 import connectDB from "./utils/db.js";
 
@@ -32,6 +33,8 @@ app.get("/", (req, res) => {
 }); 
 
 app.use("/api/v1/rent/user", router);
+app.use("/api/v1/rent/listing", propertyRouter);
+
 
 connectDB();
 
