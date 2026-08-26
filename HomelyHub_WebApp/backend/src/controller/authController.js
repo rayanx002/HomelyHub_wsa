@@ -49,5 +49,59 @@ const login = async (req, res) => {
     }
 }
 
-export { signup, login };
+// protect
+
+const protect = async (req, res, next) => {
+    try {
+        // step 1: find token
+        let token;
+        if (
+            req.headers.authorization &&
+            req.headers.authorization.startsWith("Bearer")
+        ) {
+            token = req.headers.authorization.split(" ")[1]
+
+        } else if (req.cookies.jwt && req.cookies.jwt !== "loggedout") {
+            token = req.cookies.jwt;
+        }
+
+        // step 2: no token stop here..
+
+        if (!token) {
+            throw new Error("You are not logged in!!, Please login to access")
+        }
+
+        // step 3: check token is real or not
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+        // step 4: token is real but user is still valid??
+
+        const currentUser = await User.findById(decoded.id)
+        if (!currentUser) {
+            throw new Error("the user belonging to the token doesn't exist")
+        };
+
+        // step 5: stolen token case
+
+        if (currentUser.changedPasswordAfter(decoded.iat)) {
+            throw new Error("User recently changed password, please login again!")
+        }
+
+        // step 6: all checks passed
+
+        req.user = currentUser;
+        next();
+
+    } catch (error) {
+
+        res.status(401).json({
+            status: "fail",
+            message: error.message
+
+        })
+    }
+}
+
+export { signup, login, protect };
 
