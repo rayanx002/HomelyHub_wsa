@@ -36,7 +36,7 @@ const Card = ({ id, image, name, address, price }) => {
 };
 
 const PropertyList = () => {
-  const [currentPage, setCurrentPage] = useState({ page: 1 });
+  const [currentPage, setCurrentPage] = useState(1);
 
   const dispatch = useDispatch();
   const { properties, totalProperties } = useSelector((state) => state.properties);
@@ -47,7 +47,7 @@ const PropertyList = () => {
 
   useEffect(() => {
 
-    const fetchProperties = async (page) => {
+    const fetchProperties = (page) => {
       dispatch(propertyAction.updateSearchParams({ page }));
       dispatch(getAllProperties())
     };
@@ -94,16 +94,16 @@ const PropertyList = () => {
       <div className="pagination">
         <button
           className="previous_btn"
-          onClick={() => setCurrentPage((prev) => ({ page: prev.page - 1 }))}
-          disabled={currentPage.page === 1}
+          onClick={() => setCurrentPage((prev) => prev - 1 )}
+          disabled={currentPage === 1}
         >
           <span className="material-symbols-outlined">arrow_back_ios_new</span>
         </button>
 
         <button
           className="next_btn"
-          onClick={() => setCurrentPage((prev) => ({ page: prev.page + 1 }))}
-          disabled={properties.length < 12 || currentPage.page === lastPage}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+          disabled={properties.length < 12 || currentPage === lastPage}
         >
           <span className="material-symbols-outlined">arrow_forward_ios</span>
         </button>

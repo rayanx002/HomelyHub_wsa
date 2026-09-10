@@ -1,14 +1,26 @@
-// Address List
-
 import express from "express";
-import { signup, login } from "../controller/authController.js";
+
+import {
+  check,
+  forgotPassword,
+  login,
+  logout,
+  protect,
+  resetPassword,
+  signup,
+  updateMe,
+  updatePassword,
+} from "../controller/authController.js";
 
 const router = express.Router();
 
-//signup route
 router.route("/signup").post(signup);
-
-//login route
 router.route("/login").post(login);
+router.route("/logout").get(logout);
+router.route("/updateMe").patch(protect, updateMe);
+router.route("/updateMyPassword").patch(protect, updatePassword);
+router.route("/forgotPassword").post(forgotPassword);
+router.route("/resetPassword/:token").patch(resetPassword);
+router.route("/me").get(protect, check);
 
-export {router}
+export { router };

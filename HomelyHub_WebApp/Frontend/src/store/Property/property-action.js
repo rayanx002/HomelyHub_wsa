@@ -23,7 +23,7 @@ export const getAllProperties = () => async (dispatch, getState) => {
 
         const { searchParams } = getState().properties;
 
-        console.log(searchParams);
+        console.log(searchParams)
 
         const response = await axiosInstance.get(`/v1/rent/listing`, {
             params: { ...searchParams }
@@ -38,6 +38,6 @@ export const getAllProperties = () => async (dispatch, getState) => {
         dispatch(propertyAction.getProperties(data))
 
     } catch (error) {
-        dispatch(propertyAction.getError(error.message))
+        dispatch(propertyAction.getErrors(error.message))
     }
 }
