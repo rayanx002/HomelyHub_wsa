@@ -59,7 +59,7 @@ const BookingDetails = () => {
               </span>
               {new Date(bookingDetails.fromDate).toLocaleDateString()}
             </span>
-            <span class="material-symbols-outlined  stay-icon">
+            <span className="material-symbols-outlined  stay-icon">
               arrow_forward
             </span>
             <span className="details">

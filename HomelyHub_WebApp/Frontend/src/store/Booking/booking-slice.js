@@ -1,44 +1,53 @@
-// manage bookings
-
-// store all bookings
-// store individual booking details
-// track the API loading status
-// add new bookings when a booking is created
-// update the booking data when we receive it from the backend
-
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState ={
+const initialState = {
     bookings: [],
-    bookingDetails: {},
-    loading: false
-}
+    bookingDetails: null,
+    loading: false,
+    error: null
+};
 
 const bookingSlice = createSlice({
+
     name: "booking",
+
     initialState,
+
     reducers: {
-        setBookingRequest(state){
+
+        setBookingRequest(state) {
             state.loading = true;
+            state.error = null;
         },
 
-// stores the booking received from the API
-
-        setBookings(state, action){
+        setBookings(state, action) {
             state.bookings = action.payload;
-            state.loading = true;
+            state.loading = false;
         },
 
-        addBooking: (state, action)=>{
+        addBooking(state, action) {
             state.bookings.push(action.payload);
         },
 
-        setBookingDetails: (state, action)=>{
-            state.bookingDetails = action.payload.bookings;
+        setBookingDetails(state, action) {
+            state.bookingDetails = action.payload;
+            state.loading = false;
+        },
+
+        setBookingError(state, action) {
+            state.error = action.payload;
+            state.loading = false;
         }
 
     }
-})
+});
 
-export const {setBookings, addBooking, setBookingDetails} = bookingSlice.actions;
+export const {
+    setBookingRequest,
+    setBookings,
+    addBooking,
+    setBookingDetails,
+    setBookingError
+} = bookingSlice.actions;
+
 export default bookingSlice;

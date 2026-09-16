@@ -24,9 +24,7 @@ const MyBookings = () => {
   const handleBookingClick = (bookingId) => {
     // fetch this booking's details here if you need to.
 
-    dispatch(fetchBookingDetails(bookingId));
-
-    navigate(`/user/myBookings/${bookingId}`);
+    navigate(`/user/mybookings/${bookingId}`);
   };
 
   if (bookings.length === 0 && !loading) {
@@ -82,7 +80,7 @@ const MyBookings = () => {
                       </span>
                       {new Date(booking.fromDate).toLocaleDateString()}
                     </span>
-                    <span class="material-symbols-outlined icon">
+                    <span className="material-symbols-outlined icon">
                       arrow_forward
                     </span>
                     <span className="info">
@@ -93,7 +91,7 @@ const MyBookings = () => {
                     </span>
                   </div>
                   <h5 className="booking-price">
-                    <span class="material-symbols-outlined">payments</span>{" "}
+                    <span className="material-symbols-outlined">payments</span>{" "}
                     Total Price :&#8377; {booking.price}
                   </h5>
                 </div>
